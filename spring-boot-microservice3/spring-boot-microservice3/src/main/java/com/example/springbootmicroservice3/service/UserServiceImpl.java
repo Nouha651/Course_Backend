@@ -17,7 +17,10 @@ public class UserServiceImpl implements UserService
 {
     @Autowired
     private UserRepository userRepository;
-
+    @Autowired
+    public UserServiceImpl(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
     @Autowired
     private PasswordEncoder passwordEncoder;
 
@@ -41,6 +44,7 @@ public class UserServiceImpl implements UserService
         return userRepository.findAll();
     }
 
+
     public Optional<User> getUserById(Long userId) {
         return userRepository.findById(userId);
     }
@@ -63,10 +67,10 @@ public class UserServiceImpl implements UserService
                 .orElseThrow(() -> new NotFoundException("User not found with id: " + id));
 
         // Update fields as needed
-        existingUser.setName(updatedUser.getName());
+        //existingUser.setName(updatedUser.getName());
         existingUser.setUsername(updatedUser.getUsername());
         existingUser.setPhone(updatedUser.getPhone());
-        existingUser.setAdresse(updatedUser.getAdresse());
+        //existingUser.setAdresse(updatedUser.getAdresse());
         //existingUser.setImage(updatedUser.getImage());
 
         // If the password is provided, encode and update it
@@ -89,6 +93,11 @@ public class UserServiceImpl implements UserService
         // Save the updated user to the database
         userRepository.save(user);
     }
+    @Override
+    public String getFeedbackByUserId(Long userId) {
+        Optional<User> userOptional = userRepository.findById(userId);
 
+        return userOptional.map(User::getFeedback).orElse(null);
+    }
 
 }

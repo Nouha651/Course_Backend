@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -26,30 +27,30 @@ public class User implements UserDetails
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = true)
     private String name;
     @Column(name = "username")
     private String username;
     @Column(name = "password")
     private String password;
-    @Column(name = "phone")
+    @Column(name = "phone", nullable = true)
     private String phone;
-    @Column(name = "adresse")
+    @Column(name = "adresse", nullable = true)
     private String adresse;
-    @Column(name = "image")
+    @Column(name = "image", nullable = true)
     private String image;
-    @Column(name = "create_time")
+    @Column(name = "create_time", updatable = false)
+    @CreationTimestamp
     private LocalDateTime createTime;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "role")
-    private Role role;
+    @Column(name = "role", nullable = false)
+    private Role role=Role.USER;
     @Enumerated(EnumType.STRING)
-    @Column(name = "statut")
+    @Column(name = "statut", nullable = true)
     private Statut statut;
 
-
-    @Column(name = "feedback", length = 1000, nullable = true)
+    @Column(name = "feedback", nullable = true)
     private String feedback;
 
     private String token;

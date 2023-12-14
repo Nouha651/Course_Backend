@@ -23,4 +23,6 @@ public interface UserService
 
 
     void addFeedback(Long userId, String userFeedback);
+
+    String getFeedbackByUserId(Long userId);
 }

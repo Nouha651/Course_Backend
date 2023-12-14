@@ -18,7 +18,7 @@ import java.util.Map;
 public class AuthenticationController {
     private final UserRepository repository;
     private final AuthenticationService service;
-    @PostMapping("/register")
+    @PostMapping("/register") //api/v1/auth/register
     public ResponseEntity<AuthenticationResponse> register(@RequestBody Map<String, String> request) {
         String username = request.get("username");
         String password = request.get("password");
